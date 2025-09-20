@@ -1,0 +1,18 @@
+components:
+  - name: display
+    path: src
+    sources: ["display.cpp"]
+  - name: radar
+    path: src
+    sources: ["radar.cpp"]
+  - name: main
+    path: src
+    sources: ["main.cpp"]
+
+variants:
+  - name: MeasureDistance
+    components:
+      - main
+      - display
+      - radar
+

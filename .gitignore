@@ -4,3 +4,8 @@
 .clang_complete
 .gcc-flags.json
 .vscode
+
+.bootstrap
+.venv
+build/
+.yanga
