@@ -5,14 +5,35 @@ components:
   - name: radar
     path: src
     sources: ["radar.cpp"]
-  - name: main
+  - name: main_arduino
     path: src
     sources: ["main.cpp"]
+  - name: TM1637
+    path: .yanga/TM1637
+    sources: ["TM1637Display.cpp"]
+    include_directories:
+      - path: "."
+        scope: PUBLIC
 
 variants:
   - name: MeasureDistance
     components:
-      - main
       - display
       - radar
+    west_manifest:
+      remotes:
+        - name: avishorp
+          url-base: https://github.com/avishorp
+      projects:
+        - name: TM1637
+          remote: avishorp
+          revision: v1.2.0
+          path: TM1637
+    platforms:
+      arduino_nano:
+        components: [main_arduino, TM1637, arduino_core]
+        config:
+          PLATFORM_SPECIFIC_FLAG: "true"
+
+        
 

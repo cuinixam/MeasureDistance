@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-include(".yanga/build/${VARIANT}/${PLATFORM}/config.cmake")
-project(MyProject C ASM CXX)
-include("${CMAKE_SOURCE_DIR}/.yanga/build/${VARIANT}/${PLATFORM}/variant.cmake")
+set(YANGA_CMAKE_BUILD_DIR "${CMAKE_SOURCE_DIR}/.yanga/build/${VARIANT}/${PLATFORM}")
+include("${YANGA_CMAKE_BUILD_DIR}/config.cmake")
+project(${VARIANT} C ASM CXX)
+include("${YANGA_CMAKE_BUILD_DIR}/variant.cmake")

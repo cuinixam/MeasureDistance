@@ -1,0 +1,101 @@
+platforms:
+  # Build Windows executable with clang
+  - name: win_exe
+    description: Build Windows executable with clang
+    cmake_generators:
+      - step: CreateExecutableCMakeGenerator
+        module: yanga.cmake.create_executable
+      - step: CppCheckCMakeGenerator
+        module: yanga.cmake.cppcheck
+      - step: ReportCMakeGenerator
+        module: yanga.cmake.reports
+    toolchain_file: clang.cmake
+    is_default: true
+  # Execute tests with GoogleTest framework
+  - name: gtest
+    description: Build and run components GTest tests
+    cmake_generators:
+      - step: GTestCMakeGenerator
+        module: yanga.cmake.gtest
+        config:
+            mocking:
+              enabled: true
+              strict: true
+              exclude_symbol_patterns:
+                - "_*"
+      - step: CppCheckCMakeGenerator
+        module: yanga.cmake.cppcheck
+      - step: ReportCMakeGenerator
+        module: yanga.cmake.reports
+    toolchain_file: gcc.cmake
+    west_manifest:
+      remotes:
+        - name: gtest
+          url-base: https://github.com/google
+      projects:
+        - name: googletest
+          remote: gtest
+          revision: v1.16.0
+          path: gtest
+  # Arduino Nano platform configuration
+  - name: arduino_nano
+    toolchain_file: arduino_nano.cmake
+    west_manifest:
+      remotes:
+        - name: arduino
+          url-base: https://github.com/arduino
+      projects:
+        - name: ArduinoCore-avr
+          remote: arduino
+          revision: 1.8.6
+          path: ArduinoCoreAvr
+    scoop_manifest:
+      buckets:
+        - name: main
+          source: https://github.com/ScoopInstaller/Main
+      apps:
+        - name: avr-gcc
+          version: 15.2.0
+          source: main
+    cmake_generators:
+      - step: CreateExecutableCMakeGenerator
+        module: yanga.cmake.create_executable
+        config:
+          use_global_includes: true
+      - step: CreateArduinoHexCMakeGenerator
+        file: platforms/steps.py
+
+components:
+  - name: arduino_core
+    path: .yanga/ArduinoCoreAvr/cores/arduino
+    sources:
+      - CDC.cpp
+      - HardwareSerial.cpp
+      - HardwareSerial0.cpp
+      - HardwareSerial1.cpp
+      - HardwareSerial2.cpp
+      - HardwareSerial3.cpp
+      - IPAddress.cpp
+      - PluggableUSB.cpp
+      - Print.cpp
+      - Stream.cpp
+      - Tone.cpp
+      - USBCore.cpp
+      - WInterrupts.c
+      - WMath.cpp
+      - WString.cpp
+      - abi.cpp
+      - hooks.c
+      - main.cpp
+      - new.cpp
+      - wiring.c
+      - wiring_analog.c
+      - wiring_digital.c
+      - wiring_pulse.S
+      - wiring_pulse.c
+      - wiring_shift.c
+    include_directories:
+      - path: "."
+        scope: PUBLIC
+      - path: "../../variants/eightanaloginputs"
+        scope: PUBLIC

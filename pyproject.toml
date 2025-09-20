@@ -16,6 +16,7 @@ classifiers = [
 ]
 dependencies = [
   "py-app-dev>=2,<3",
+  "pip-system-certs>=4.0,<5.0",
   "sphinx-copybutton>=0,<1",
   "sphinx-design>=0,<1",
   "sphinx-needs>=2,<3",
@@ -27,5 +28,5 @@ dependencies = [
   "west>=1,<2",
   # Added because UV needs it as explicit dependency. It might be a bug in UV
   "wrapt>=1,<2",
-  "yanga>=2,<3",
+  "yanga>=2.17,<3",
 ]

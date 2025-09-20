@@ -5,7 +5,7 @@ pipeline:
       config:
         python_executable: python3
     - step: ScoopInstall
-      module: pypeline.steps.scoop_install
+      module: yanga.steps.scoop_install
       description: Install scoop dependencies
       timeout_sec: 120
     - step: GenerateEnvSetupScript
